@@ -1,0 +1,155 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "description": "",
+  "author": "IsabellaKPM",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=24.0.0",
+    "yarn": ">=1.22.0"
+  },
+  "scripts": {
+    "prepare": "husky",
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "jest",
+    "test:unit:cov": "jest --coverage --coverageDirectory=../coverage/unit",
+    "test:integration": "jest --config ./test/jest.integration.json --runInBand",
+    "test:integration:watch": "jest --config ./test/jest.integration.json --watch",
+    "test:integration:cov": "jest --config ./test/jest.integration.json --runInBand --coverage --coverageDirectory=coverage/integration",
+    "test:integration:debug": "jest --config ./test/jest.integration.json --runInBand --detectOpenHandles --verbose",
+    "test:integration:reuse": "TESTCONTAINERS_REUSE_ENABLE=true jest --config ./test/jest.integration.json",
+    "test:integration:ci": "jest --config ./test/jest.integration.json --runInBand --ci",
+    "db:typeorm": "ts-node -P tsconfig.json ./node_modules/typeorm/cli.js",
+    "db:setup": "yarn db:migration:run && yarn db:seed:run",
+    "db:seed:run": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/runners/seed-runner.ts",
+    "db:seed:run:prod": "node dist/src/infrastructure/database/seeds/runners/seed-runner.js",
+    "db:migration:generate": "yarn db:typeorm migration:generate -d src/infrastructure/database/config/data-source.cli.ts",
+    "db:migration:run": "yarn db:typeorm migration:run -d src/infrastructure/database/config/data-source.cli.ts",
+    "db:migration:run:prod": "node ./node_modules/typeorm/cli.js migration:run -d dist/src/infrastructure/database/config/data-source.cli.js",
+    "db:migration:revert": "yarn db:typeorm migration:revert -d src/infrastructure/database/config/data-source.cli.ts",
+    "infra:docker_dev": "docker compose --env-file .env.development -f .infra/docker/docker-compose.dev.yml",
+    "infra:up": "yarn infra:docker_dev up -d --build",
+    "infra:down": "yarn infra:docker_dev down",
+    "infra:reset": "yarn infra:docker_dev down -v --remove-orphans",
+    "infra:logs": "yarn infra:docker_dev logs -f",
+    "infra:prune": "docker system prune -af --volumes",
+    "ci:check": "yarn lint && yarn typecheck",
+    "ci": "yarn ci:check && yarn test && yarn test:integration:ci",
+    "coverage:clean": "rm -rf .nyc_output coverage",
+    "coverage:merge": "mkdir -p .nyc_output && cp coverage/unit/coverage-final.json .nyc_output/unit.json && cp coverage/integration/coverage-final.json .nyc_output/integration.json && nyc report --reporter=html --reporter=lcov --reporter=text-summary --report-dir=coverage/merged",
+    "coverage:test:all": "yarn coverage:clean && yarn test:unit:cov && yarn test:integration:cov && yarn coverage:merge"
+  },
+  "lint-staged": {
+    "*.{ts,js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/passport": "^11.0.5",
+    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/swagger": "^11.3.0",
+    "@nestjs/typeorm": "^11.0.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "joi": "^18.1.2",
+    "jwks-rsa": "^4.0.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "pg": "^8.20.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "typeorm": "0.3.30"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^11.0.21",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.0.1",
+    "@testcontainers/postgresql": "^11.14.0",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^25.6.0",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/supertest": "^7.0.0",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^17.0.0",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "lint-staged": "16",
+    "nyc": "^18.0.0",
+    "prettier": "^3.8.3",
+    "source-map-support": "^0.5.21",
+    "supertest": "^7.0.0",
+    "testcontainers": "^12.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "cacheDirectory": ".jest-cache",
+    "reporters": [
+      "default",
+      [
+        "jest-junit",
+        {
+          "outputDirectory": "reports/junit",
+          "outputName": "unit-test-results.xml"
+        }
+      ]
+    ],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s",
+      "!**/*.module.ts",
+      "!**/migrations/**",
+      "!**/seeds/**",
+      "!**/coverage/**",
+      "!main.(t|j)s"
+    ],
+    "coverageDirectory": "../coverage",
+    "coverageReporters": [
+      "text-summary",
+      "html",
+      "lcov",
+      "cobertura",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^@core/(.*)$": "<rootDir>/core/$1",
+      "^@infrastructure/(.*)$": "<rootDir>/infrastructure/$1",
+      "^@modules/(.*)$": "<rootDir>/modules/$1",
+      "^@constants/(.*)$": "<rootDir>/core/constants/$1"
+    },
+    "testEnvironment": "node"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "..",
+  "testEnvironment": "node",
+  "testRegex": ".integration.spec.ts$",
+  "cacheDirectory": "<rootDir>/.jest-cache",
+  "reporters": [
+    "default",
+    [
+      "jest-junit", {
+        "outputDirectory": "reports/junit",
+        "outputName": "integration-test-results.xml"
+      }
+    ]
+  ],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(jose|jwks-rsa)/)"
+  ],
+  "moduleNameMapper": {
+    "^@core/(.*)$": "<rootDir>/src/core/$1",
+    "^@infrastructure/(.*)$": "<rootDir>/src/infrastructure/$1",
+    "^@modules/(.*)$": "<rootDir>/src/modules/$1",
+    "^@constants/(.*)$": "<rootDir>/src/core/constants/$1"
+  },
+  "globalSetup": "<rootDir>/test/setup/setup.ts",
+  "globalTeardown": "<rootDir>/test/setup/teardown.ts"
+}

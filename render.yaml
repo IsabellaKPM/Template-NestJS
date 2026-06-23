@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: mially-backend
+    env: docker
+    dockerfile_path: .infra/docker/Dockerfile
+    docker_target: production
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3001
+      - key: NODE_ENV
+        value: production
+
+databases:
+  - name: DB_NAME
+    databaseName: DB_NAME
+    plan: free
