@@ -29,6 +29,6 @@
       "@constants/*": ["./src/core/constants/*"]
     },
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "test/**/*", "commitlint.config.ts"],
   "exclude": ["node_modules", "dist"]
 }

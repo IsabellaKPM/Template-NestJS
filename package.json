@@ -43,7 +43,7 @@
     "infra:logs": "yarn infra:docker_dev logs -f",
     "infra:prune": "docker system prune -af --volumes",
     "ci:check": "yarn lint && yarn typecheck",
-    "ci": "yarn ci:check && yarn test && yarn test:integration:ci",
+    "ci": "yarn ci:check && yarn test:unit && yarn test:integration:ci",
     "coverage:clean": "rm -rf .nyc_output coverage",
     "coverage:merge": "mkdir -p .nyc_output && cp coverage/unit/coverage-final.json .nyc_output/unit.json && cp coverage/integration/coverage-final.json .nyc_output/integration.json && nyc report --reporter=html --reporter=lcov --reporter=text-summary --report-dir=coverage/merged",
     "coverage:test:all": "yarn coverage:clean && yarn test:unit:cov && yarn test:integration:cov && yarn coverage:merge"
@@ -75,6 +75,8 @@
     "typeorm": "0.3.30"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.1",
+    "@commitlint/config-conventional": "^21.2.0",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^10.0.1",
     "@nestjs/cli": "^11.0.21",
@@ -94,6 +96,7 @@
     "globals": "^17.0.0",
     "husky": "^9.1.7",
     "jest": "^30.4.2",
+    "jest-junit": "^17.0.0",
     "lint-staged": "16",
     "nyc": "^18.0.0",
     "prettier": "^3.8.3",

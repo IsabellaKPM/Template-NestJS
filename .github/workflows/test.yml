@@ -1,0 +1,52 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - feature/*
+      - fix/*
+      - bugfix/*
+      - chore/*
+      - refactor/*
+      - test/*
+
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Use Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Restore Jest Cache
+        uses: actions/cache@v5
+        with:
+          path: .jest-cache
+          key: ${{ runner.os }}-jest-${{ hashFiles('**/*.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-jest-
+
+      - name: Run Lint and Tests (Unit + Integration)
+        run: yarn ci
+
+      - name: Publish Test Report (Jest-JUnit)
+        uses: mikepenz/action-junit-report@v6
+        if: success() || failure()
+        with:
+          report_paths: '**/reports/junit/*.xml'
+          annotate_only: true
+          detailed_summary: true

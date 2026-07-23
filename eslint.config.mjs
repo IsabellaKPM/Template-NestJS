@@ -11,7 +11,8 @@ export default [
       "dist",
       "node_modules",
       "eslint.config.mjs",
-      "src/infrastructure/database/migrations/*.ts"
+      "src/infrastructure/database/migrations/*.ts",
+      "commitlint.config.ts"
     ],
   },
 
