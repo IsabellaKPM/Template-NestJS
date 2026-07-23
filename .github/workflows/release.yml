@@ -30,7 +30,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Restore Jest Cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .jest-cache
           key: ${{ runner.os }}-jest-${{ hashFiles('**/*.ts') }}
