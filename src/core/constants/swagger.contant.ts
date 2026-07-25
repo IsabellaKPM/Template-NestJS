@@ -1,8 +1,10 @@
+import * as packageInfo from "../../../package.json";
+
 export const SWAGGER_CONFIG = {
   PATH: "docs",
-  TITLE: "Mially API",
-  DESCRIPTION: "Documentación de la API de Mially",
-  VERSION: "0.0.0",
+  TITLE: "API",
+  DESCRIPTION: "Documentación de la API de NestJS",
+  VERSION: packageInfo.version,
 
   BEARER_AUTH_NAME: "access-token",
   BEARER_AUTH: {
@@ -10,7 +12,7 @@ export const SWAGGER_CONFIG = {
     scheme: "bearer",
     bearerFormat: "JWT",
     name: "JWT",
-    description: "Ingresa tu token JWT",
+    description: "Insert the JWT token in the following format: Bearer <token>",
     in: "header",
   },
 } as const;

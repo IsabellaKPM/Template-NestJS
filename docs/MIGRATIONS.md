@@ -17,7 +17,7 @@ Aplica las migraciones a la base de datos.
 ## Generar migración
 
 ```bash
-docker exec -it backend-api yarn db:migration:generate src/migrations/<nombre>
+docker exec -it backend-api yarn db:migration:generate src/infrastructure/database/migrations/<nombre>
 ```
 
 Genera una nueva migración basada en cambios en las entidades.

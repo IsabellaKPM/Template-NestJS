@@ -9,10 +9,11 @@
     "yarn": ">=1.22.0"
   },
   "scripts": {
+    "commit": "cz",
     "prepare": "husky",
     "build": "nest build",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "nest start --watch --preserveWatchOutput",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -28,7 +29,7 @@
     "test:integration:debug": "jest --config ./test/jest.integration.json --runInBand --detectOpenHandles --verbose",
     "test:integration:reuse": "TESTCONTAINERS_REUSE_ENABLE=true jest --config ./test/jest.integration.json",
     "test:integration:ci": "jest --config ./test/jest.integration.json --runInBand --ci",
-    "db:typeorm": "ts-node -P tsconfig.json ./node_modules/typeorm/cli.js",
+    "db:typeorm": "ts-node -r tsconfig-paths/register -P tsconfig.json ./node_modules/typeorm/cli.js",
     "db:setup": "yarn db:migration:run && yarn db:seed:run",
     "db:seed:run": "ts-node -r tsconfig-paths/register src/infrastructure/database/seeds/runners/seed-runner.ts",
     "db:seed:run:prod": "node dist/src/infrastructure/database/seeds/runners/seed-runner.js",
@@ -53,6 +54,11 @@
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -154,5 +160,6 @@
       "^@constants/(.*)$": "<rootDir>/core/constants/$1"
     },
     "testEnvironment": "node"
-  }
+  },
+  "packageManager": "yarn@4.17.0"
 }

@@ -4,4 +4,4 @@ import { Module } from "@nestjs/common";
   imports: [],
   controllers: [],
 })
-export class ApiModule {}
+export class AdminModule {}

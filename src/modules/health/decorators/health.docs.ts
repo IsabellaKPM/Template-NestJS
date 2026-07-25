@@ -4,13 +4,14 @@ import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 export function GetHealthDocs() {
   return applyDecorators(
     ApiOperation({
-      summary: "Verificar el estado de la aplicación",
-      description: "Retorna el estado actual de la API y su disponibilidad.",
+      summary: "Verify the health status of the API",
+      description:
+        "Returns the current status of the API and its availability.",
     }),
 
     ApiResponse({
       status: 200,
-      description: "La aplicación está funcionando correctamente.",
+      description: "The API is healthy and available.",
       schema: {
         type: "object",
         properties: {
@@ -22,7 +23,7 @@ export function GetHealthDocs() {
 
     ApiResponse({
       status: 503,
-      description: "El servicio no está disponible.",
+      description: "The service is not available.",
     }),
   );
 }

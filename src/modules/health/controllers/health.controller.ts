@@ -5,7 +5,7 @@ import { API_TAGS } from "@core/constants";
 
 @ApiTags(API_TAGS.HEALTH)
 @Controller("health")
-export class HealthStoreController {
+export class HealthController {
   @Get()
   @GetHealthDocs()
   check() {

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: mially-backend
+    name: backend
     env: docker
     dockerfile_path: .infra/docker/Dockerfile
     docker_target: production

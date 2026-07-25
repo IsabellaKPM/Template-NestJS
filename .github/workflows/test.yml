@@ -21,19 +21,19 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Use Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: 'yarn'
 
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Restore Jest Cache
-        uses: actions/cache@v5
+        uses: actions/cache@v6
         with:
           path: .jest-cache
           key: ${{ runner.os }}-jest-${{ hashFiles('**/*.ts') }}
