@@ -5,7 +5,7 @@ import { DataSource } from "typeorm";
 import { resetDatabase } from "../utils/db-reset.util";
 import { closeApp } from "../utils/close-app.util";
 import type { Server } from "http";
-import { ApiModule } from "@modules/api/api.module";
+import { AppModule } from "@modules/app.module";
 
 export interface TestAppContext {
   app: INestApplication;
@@ -16,7 +16,7 @@ export interface TestAppContext {
 
 export async function createTestApp(): Promise<TestAppContext> {
   const moduleFixture: TestingModule = await Test.createTestingModule({
-    imports: [ApiModule],
+    imports: [AppModule],
   }).compile();
 
   const app = moduleFixture.createNestApplication();

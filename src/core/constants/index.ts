@@ -1,2 +1,2 @@
 export * from "./api.constant";
-export * from "./swagger.contant";
+export * from "./swagger.constant";

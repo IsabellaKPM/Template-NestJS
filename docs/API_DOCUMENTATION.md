@@ -1,7 +1,5 @@
 # API DOCUMENTATION
 
-Los *endpoints* de la API están documentados en *Swagger*.
+The API endpoints are documented in Swagger.
 
-Para acceder a la documentación en *Swagger* ingresar a la ruta `\docs` de la API:
-
-> <https://ruta.onrender.com/docs>
+To access the Swagger documentation, go to the API's `/docs` path.

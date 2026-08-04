@@ -1,55 +1,67 @@
-# Base de datos (migraciones)
+# Database (Migrations)
 
-Antes de ejecutar los comandos de migraciones, se debe [levantar el entorno de desarrollo en Docker](SETUP.md).
+> 🚨 **VEEEERY IMPORTANT:** Remember to instantiate each **entity** you create inside the list at `src/infrastructure/database/config/entities.ts`. If you don't, you will spend a veeeeeery long time trying to figure out all the errors.
 
-**IMPORTANTE:** En desarrollo, las migraciones se corren automáticamente al levantar los contenedores.
+Before running migration commands, you must [set up the development environment with Docker](SETUP.md).
 
-## Ejecutar migraciones
+> **IMPORTANT:** In development and test, migrations run automatically when starting the containers.
+
+## Table of Contents
+
+- [Database (Migrations)](#database-migrations)
+  - [Table of Contents](#table-of-contents)
+  - [Run Migrations](#run-migrations)
+  - [Generate Migration](#generate-migration)
+  - [Revert Migration](#revert-migration)
+  - [Run Migrations in Production](#run-migrations-in-production)
+  - [Access Database CLI](#access-database-cli)
+
+## Run Migrations
 
 ```bash
 docker exec -it backend-api yarn db:migration:run
 ```
 
-Aplica las migraciones a la base de datos.
+Applies pending migrations to the database.
 
 ---
 
-## Generar migración
+## Generate Migration
 
 ```bash
-docker exec -it backend-api yarn db:migration:generate src/infrastructure/database/migrations/<nombre>
+docker exec -it backend-api yarn db:migration:generate src/infrastructure/database/migrations/<name>
 ```
 
-Genera una nueva migración basada en cambios en las entidades.
+Generates a new migration based on changes in the entities.
 
-**IMPORTANTE:** `<nombre>` debe tener el formato `ExecutedActionMadeByMigration`, estar en inglés y mencionar la columna que se añade o lo que se modificó (por ejemplo: `AddUserProviderIdAndPostStatus`).
+**IMPORTANT:** `<name>` must follow the `ExecutedActionMadeByMigration` format, be written in English, and mention the added column or modifications made (for example: `AddUserProviderIdAndPostStatus`).
 
 ---
 
-## Revertir migración
+## Revert Migration
 
 ```bash
 docker exec -it backend-api yarn db:migration:revert
 ```
 
-Revierte la última migración aplicada.
+Reverts the last applied migration.
 
 ---
 
-## Correr migraciones en producción
+## Run Migrations in Production
 
 ```bash
 yarn db:migration:run:prod
 ```
 
-Sólo se usa en producción.
+Only used in production.
 
 ---
 
-## Revisar base de datos
+## Access Database CLI
 
 ```bash
 docker exec -it postgres_db psql -U <DB_USER> -d <DB_NAME>
 ```
 
-Permite ingresar a la terminal de la base de datos dentro del contenedor. Reemplazar `<VARIABLE>` por el valor de la variable correspondiente en el `.env.development`.
+Allows you to access the database CLI inside the container. Replace `<VARIABLE>` with the corresponding variable value from `.env.development`.

@@ -1,40 +1,44 @@
-# Git Version
+# Git Versioning
 
-Este proyecto usa un flujo de releases basado en **tags (`vX.X.X`)**.
+This project uses a release workflow based on **tags (`vX.X.X`)**.
 
-## Cómo funciona
+## Table of Contents
 
-- El pipeline se ejecuta **sólo cuando se crea un tag** (`v*`).
+- [Git Versioning](#git-versioning)
+  - [Table of Contents](#table-of-contents)
+  - [How It Works](#how-it-works)
+  - [Workflow](#workflow)
+    - [1. Merge to `main`](#1-merge-to-main)
+    - [2. Update Version](#2-update-version)
+      - [Versioning](#versioning)
 
-- Antes de crear el release:
+## How It Works
 
-  - Instala dependencias.
+- The pipeline runs **only when a tag is created** (`v*`).
 
-  - Corre tests unitarios.
+- Before creating the release, it runs the `.github/workflows/test.yml`.
 
-  - Corre tests integration.
+- If everything passes, a release is automatically created.
 
-- Si todo pasa se crea automáticamente un release.
+## Workflow
 
-## Flujo
+### 1. Merge to `main`
 
-### 1. Merge a `main`
+All code must be merged via PR and fully validated.
 
-Todo el código debe entrar vía PR y estar validado.
+### 2. Update Version
 
-### 2. Actualizar versión
-
-La versión sólo se actualza en `main`, en ninguna otra rama. Para hacerlo se debe hacer merge a una Pull Request y luego:
+The version is only updated on `main`, never on any other branch. To do this, merge a Pull Request first, and then run:
 
 ```bash
 yarn version --patch   # --minor / --major
 git push origin main --tags
 ```
 
-#### Versionado
+#### Versioning
 
 - `--patch`. Bugfix. `1.2.3 → 1.2.4`
 
-- `--minor`. Nuevas features. `1.2.3 → 1.3.0`
+- `--minor`. New features. `1.2.3 → 1.3.0`
 
-- `--major`. Cambios muy importantes. `1.2.3 → 2.0.0`
+- `--major`. Major changes and updates. `1.2.3 → 2.0.0`

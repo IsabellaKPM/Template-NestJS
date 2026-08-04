@@ -1,19 +1,17 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { HealthDto } from "../dtos/health.dto";
 
-export function GetHealthDocs() {
+export function GetHelloWorldDocs() {
   return applyDecorators(
     ApiOperation({
-      summary: "Verify the health status of the API",
-      description:
-        "Returns the current status of the API and its availability.",
+      summary: "Greet the Admin",
+      description: "Returns a greeting message for the admin user.",
     }),
 
     ApiResponse({
       status: 200,
-      description: "The API is healthy and available.",
-      type: HealthDto,
+      description: "The endpoint is working correctly.",
+      type: String,
     }),
 
     ApiResponse({

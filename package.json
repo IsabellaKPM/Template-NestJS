@@ -1,9 +1,10 @@
 {
   "name": "backend",
+  "description": "NestJS Template",
   "version": "0.0.0",
-  "description": "",
   "author": "IsabellaKPM",
-  "license": "GPL-3.0-only",
+  "license": "MIT",
+  "private": true,
   "engines": {
     "node": ">=24.0.0",
     "yarn": ">=1.22.0"
@@ -128,6 +129,7 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
+    "modulePathIgnorePatterns": ["<rootDir>/dist/"],
     "cacheDirectory": ".jest-cache",
     "reporters": [
       "default",

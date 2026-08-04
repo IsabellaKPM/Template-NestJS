@@ -8,7 +8,7 @@ import globals from "globals";
 export default [
   {
     ignores: [
-      "dist",
+      "dist/**",
       "node_modules",
       "eslint.config.mjs",
       "commitlint.config.ts",

@@ -10,36 +10,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+
   release:
+    needs: test
     runs-on: ubuntu-latest
 
     permissions:
       contents: write
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v7
-
-      - name: Use Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Restore Jest Cache
-        uses: actions/cache@v6
-        with:
-          path: .jest-cache
-          key: ${{ runner.os }}-jest-${{ hashFiles('**/*.ts') }}
-          restore-keys: |
-            ${{ runner.os }}-jest-
-
-      - name: Run Lint and Tests (Unit + Integration)
-        run: yarn ci
-
       - name: Extract version from tag
         id: tag
         run: |

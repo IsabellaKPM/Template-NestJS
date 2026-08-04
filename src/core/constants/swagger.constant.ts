@@ -3,7 +3,7 @@ import * as packageInfo from "../../../package.json";
 export const SWAGGER_CONFIG = {
   PATH: "docs",
   TITLE: "API",
-  DESCRIPTION: "Documentación de la API de NestJS",
+  DESCRIPTION: "NestJS Template API Documentation",
   VERSION: packageInfo.version,
 
   BEARER_AUTH_NAME: "access-token",

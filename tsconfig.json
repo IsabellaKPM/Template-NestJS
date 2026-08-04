@@ -17,6 +17,7 @@
     "rootDir": "./",
     "types": ["node", "jest", "multer"],
     "incremental": true,
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
