@@ -1,3 +1,4 @@
+import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { UserWithPasswordDto } from "../dtos/user-with-password.dto";
 import { UserDto } from "../dtos/user.dto";
@@ -5,7 +6,10 @@ import { User } from "../entities/user.entity";
 import { UserNotFoundException } from "../exceptions/user-not-found.exception";
 
 export class UserService {
-  constructor(private userRepository: Repository<User>) {}
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
   async findById(userId: string): Promise<UserDto> {
     const user = await this.userRepository.findOneBy({ id: userId });
