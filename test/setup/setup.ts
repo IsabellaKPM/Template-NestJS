@@ -12,6 +12,8 @@ export default async () => {
 
   dotenv.config({ path: path.resolve(__dirname, "../.env.test") });
   process.env.NODE_ENV = "test";
+  process.env.JWT_ACCESS_SECRET = "test-access-secret";
+  process.env.JWT_REFRESH_SECRET = "test-refresh-secret";
 
   const container = await startPostgresContainer();
   global.__POSTGRES_CONTAINER__ = container;

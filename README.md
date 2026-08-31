@@ -46,6 +46,8 @@ DB_PASSWORD=
 DB_NAME=
 DB_URL=
 
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001
+
 JWT_ACCESS_SECRET=xx  # Secret for generating access tokens
 JWT_REFRESH_SECRET=xx # Secret for generating refresh tokens
 ```
