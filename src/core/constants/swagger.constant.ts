@@ -19,4 +19,6 @@ export const SWAGGER_CONFIG = {
 
 export const API_TAGS = {
   HEALTH: "Health",
+  AUTH: "Authentication",
+  USERS: "Users",
 };
