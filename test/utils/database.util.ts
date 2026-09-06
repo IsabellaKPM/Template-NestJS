@@ -1,4 +1,4 @@
-import { createDataSource } from "../../src/infrastructure/database/config/data-source";
+import { createDataSource } from "../../src/infrastructure/database/data-source/data-source";
 
 export async function setupTestDatabase() {
   console.log("--- Running Database Migrations & Seeds ---");

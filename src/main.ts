@@ -1,33 +1,38 @@
 import "reflect-metadata";
+import cookieParser from "cookie-parser";
 import { NestFactory } from "@nestjs/core";
-import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
-import { API_CONFIG, SWAGGER_CONFIG } from "@core/constants";
+import { ConfigType } from "@nestjs/config";
+import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "@modules/app.module";
-import { HealthModule } from "@modules/health/health.module";
-import { ApiModule } from "@modules/api/api.module";
-import { AdminModule } from "@modules/admin/admin.module";
+import { setupSwagger } from "@infrastructure/config/swagger.setup";
+import { appConfig } from "@infrastructure/config/configs/app.config";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(cookieParser());
+
+  const appConf = app.get<ConfigType<typeof appConfig>>(appConfig.KEY);
+
   app.enableCors({
-    origin: API_CONFIG.CORS_ORIGINS,
+    origin: appConf.corsOrigins,
     credentials: true,
   });
 
-  const config = new DocumentBuilder()
-    .setTitle(SWAGGER_CONFIG.TITLE)
-    .setDescription(SWAGGER_CONFIG.DESCRIPTION)
-    .setVersion(SWAGGER_CONFIG.VERSION)
-    .addBearerAuth(SWAGGER_CONFIG.BEARER_AUTH, SWAGGER_CONFIG.BEARER_AUTH_NAME)
-    .build();
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
-  const document = SwaggerModule.createDocument(app, config, {
-    include: [HealthModule, ApiModule, AdminModule],
-  });
-  SwaggerModule.setup(SWAGGER_CONFIG.PATH, app, document);
+  setupSwagger(app);
 
-  await app.listen(API_CONFIG.PORT, API_CONFIG.HOST);
+  await app.listen(appConf.port, appConf.host);
 }
 
 bootstrap().catch((err) => {

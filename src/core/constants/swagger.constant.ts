@@ -6,14 +6,33 @@ export const SWAGGER_CONFIG = {
   DESCRIPTION: "NestJS Template API Documentation",
   VERSION: packageInfo.version,
 
-  BEARER_AUTH_NAME: "access-token",
+  BEARER_AUTH_NAME: "bearer-token",
   BEARER_AUTH: {
     type: "http",
     scheme: "bearer",
     bearerFormat: "JWT",
     name: "JWT",
-    description: "Insert the JWT token in the following format: Bearer <token>",
+    description:
+      "JWT Authorization header using the Bearer scheme. Example: 'Authorization: Bearer {token}'",
     in: "header",
+  },
+
+  COOKIE_ACCESS_NAME: "access_token",
+  COOKIE_ACCESS_AUTH: {
+    type: "apiKey",
+    in: "cookie",
+    name: "access_token",
+    description:
+      "HttpOnly Cookie for user authentication. Example: 'access_token={token}'",
+  },
+
+  COOKIE_REFRESH_NAME: "refresh_token",
+  COOKIE_REFRESH_AUTH: {
+    type: "apiKey",
+    in: "cookie",
+    name: "refresh_token",
+    description:
+      "HttpOnly Cookie for token refresh. Example: 'refresh_token={token}'",
   },
 } as const;
 

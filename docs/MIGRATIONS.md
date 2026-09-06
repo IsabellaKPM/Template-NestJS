@@ -1,6 +1,6 @@
 # Database (Migrations)
 
-> 🚨 **VEEEERY IMPORTANT:** Remember to instantiate each **entity** you create inside the list at `src/infrastructure/database/config/entities.ts`. If you don't, you will spend a veeeeeery long time trying to figure out all the errors.
+> 🚨 **VEEEERY IMPORTANT:** Remember to instantiate each **entity** you create inside the list at `src/infrastructure/database/data-source/entities.ts`. If you don't, you will spend a veeeeeery long time trying to figure out all the errors.
 
 Before running migration commands, you must [set up the development environment with Docker](SETUP.md).
 

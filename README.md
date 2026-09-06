@@ -38,6 +38,7 @@
 ```.env
 NODE_ENV=development # or test
 PORT=3001
+HOST=0.0.0.0
 
 DB_HOST=
 DB_PORT=
@@ -48,8 +49,8 @@ DB_URL=
 
 CORS_ORIGINS=http://localhost:3000,http://localhost:3001
 
-JWT_ACCESS_SECRET=xx  # Secret for generating access tokens
-JWT_REFRESH_SECRET=xx # Secret for generating refresh tokens
+JWT_ACCESS_SECRET=fake_access_secret
+JWT_REFRESH_SECRET=fake_refresh_secret
 ```
 
 ## About this Template

@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { RouterModule } from "@nestjs/core";
 import { ConfigModule } from "@nestjs/config";
-import { ValidationModule } from "@infrastructure/validation/validation.module";
+import { ValidationModule } from "@infrastructure/config/config.module";
 import { DatabaseModule } from "@infrastructure/database/database.module";
 import { HealthModule } from "./health/health.module";
 import { ApiModule } from "./api/api.module";
