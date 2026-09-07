@@ -33,24 +33,53 @@
 
 ## ENV
 
-**IMPORTANT:** Two `.env` files must be created at the repository root—named `.env.development` and `.env.test`—with `NODE_ENV=development` and `NODE_ENV=test` respectively. The `.gitignore` file already ignores them by default. While all empty variables in `.env.development` must be filled in, those in `.env.test` can be left as-is, since they are automatically populated when `Testcontainers` starts up.
+**IMPORTANT:** Three `.env` files must be created at the repository root—named `.env.development`, `.env.production` and `.env.test`—with `NODE_ENV=development`, `NODE_ENV=production` and `NODE_ENV=test` respectively. The `.gitignore` file already ignores them by default. You must fill all empty variables in the `.env.development` and `.env.production` or you will run into errors. The development environment asks for each DB variable and then joins them to form the URL, while the production one asks for the DB_URL from the beginning.
 
 ```.env
-NODE_ENV=development # or test
+NODE_ENV=development
 PORT=3001
 HOST=0.0.0.0
+
+CORS_ORIGINS=http://localhost:3000,http://localhost:3001
 
 DB_HOST=
 DB_PORT=
 DB_USER=
 DB_PASSWORD=
 DB_NAME=
+
+JWT_ACCESS_SECRET=development_access_secret
+JWT_REFRESH_SECRET=development_refresh_secret
+ACCESS_TOKEN_MAX_AGE=3600
+REFRESH_TOKEN_MAX_AGE=86400
+```
+
+```.env
+NODE_ENV=production
+PORT=3001
+HOST=0.0.0.0
+
+CORS_ORIGINS=
+
 DB_URL=
+
+JWT_ACCESS_SECRET=production_access_secret
+JWT_REFRESH_SECRET=production_refresh_secret
+ACCESS_TOKEN_MAX_AGE=3600
+REFRESH_TOKEN_MAX_AGE=86400
+```
+
+```.env
+NODE_ENV=test
+PORT=3001
+HOST=0.0.0.0
 
 CORS_ORIGINS=http://localhost:3000,http://localhost:3001
 
-JWT_ACCESS_SECRET=fake_access_secret
-JWT_REFRESH_SECRET=fake_refresh_secret
+JWT_ACCESS_SECRET=test_access_secret
+JWT_REFRESH_SECRET=test_refresh_secret
+ACCESS_TOKEN_MAX_AGE=3600
+REFRESH_TOKEN_MAX_AGE=604800
 ```
 
 ## About this Template

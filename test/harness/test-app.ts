@@ -1,11 +1,11 @@
 import request from "supertest";
+import { DataSource } from "typeorm";
+import type { Server } from "http";
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
-import { DataSource } from "typeorm";
+import { AppModule } from "@modules/app.module";
 import { resetDatabase } from "../utils/db-reset.util";
 import { closeApp } from "../utils/close-app.util";
-import type { Server } from "http";
-import { AppModule } from "@modules/app.module";
 
 export interface TestAppContext {
   app: INestApplication;

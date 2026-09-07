@@ -1,33 +1,36 @@
-import { Injectable } from "@nestjs/common";
 import { Response } from "express";
-import { ConfigService } from "@nestjs/config";
-import { AUTH_MODULE_CONSTANTS } from "../constants/auth.constants";
+import { type ConfigType } from "@nestjs/config";
+import { Inject, Injectable } from "@nestjs/common";
+import { jwtConfig } from "@infrastructure/config/configs/jwt.config";
+import { appConfig } from "@infrastructure/config/configs/app.config";
 
 @Injectable()
 export class CookieService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    @Inject(jwtConfig.KEY)
+    private readonly jwt: ConfigType<typeof jwtConfig>,
+    @Inject(appConfig.KEY)
+    private readonly app: ConfigType<typeof appConfig>,
+  ) {}
 
   public setAuthCookies(
     res: Response,
     accessToken: string,
     refreshToken: string,
   ): void {
-    const isProduction = this.configService.get("NODE_ENV") === "production";
-
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction,
+      secure: this.app.isProduction,
       sameSite: "strict" as const,
     };
 
     res.cookie("access_token", accessToken, {
       ...cookieOptions,
-      maxAge: AUTH_MODULE_CONSTANTS.ACCESS_TOKEN_MAX_AGE,
+      maxAge: this.jwt.accessTokenMaxAge * 1000,
     });
-
     res.cookie("refresh_token", refreshToken, {
       ...cookieOptions,
-      maxAge: AUTH_MODULE_CONSTANTS.REFRESH_TOKEN_MAX_AGE,
+      maxAge: this.jwt.refreshTokenMaxAge * 1000,
     });
   }
 

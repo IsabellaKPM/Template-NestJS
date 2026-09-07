@@ -1,7 +1,7 @@
 import { Controller, Post, Get, Body, Res, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import type { Response } from "express";
-import { API_TAGS } from "@core/constants";
+import { API_TAGS } from "@core/constants/swagger.constant";
 import { AuthService } from "../services/auth.service";
 import { CookieService } from "../services/cookie.service";
 import { LoginRequestDto } from "../dtos/login-request.dto";

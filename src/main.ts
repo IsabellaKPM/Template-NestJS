@@ -4,7 +4,7 @@ import { NestFactory } from "@nestjs/core";
 import { ConfigType } from "@nestjs/config";
 import { ValidationPipe } from "@nestjs/common";
 import { AppModule } from "@modules/app.module";
-import { setupSwagger } from "@infrastructure/config/swagger.setup";
+import { setupSwagger } from "@infrastructure/config/setups/swagger.setup";
 import { appConfig } from "@infrastructure/config/configs/app.config";
 
 async function bootstrap() {

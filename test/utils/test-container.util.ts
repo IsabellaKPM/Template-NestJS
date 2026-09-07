@@ -12,23 +12,16 @@ export async function startPostgresContainer(): Promise<StartedPostgreSqlContain
 }
 
 export function mapContainerToEnv(container: StartedPostgreSqlContainer): void {
-  const host = container.getHost();
-  const port = container.getMappedPort(5432).toString();
-  const user = container.getUsername();
-  const pass = container.getPassword();
-  const db = container.getDatabase();
-
   Object.assign(process.env, {
-    DB_HOST: host,
-    DB_PORT: port,
-    DB_USER: user,
-    DB_PASSWORD: pass,
-    DB_NAME: db,
-    DB_URL: `postgresql://${user}:${pass}@${host}:${port}/${db}`,
+    DB_HOST: container.getHost(),
+    DB_PORT: container.getMappedPort(5432).toString(),
+    DB_USER: container.getUsername(),
+    DB_PASSWORD: container.getPassword(),
+    DB_NAME: container.getDatabase(),
   });
 }
 
-export async function stopPostgresContainer() {
+export async function stopPostgresContainer(): Promise<void> {
   const container = global.__POSTGRES_CONTAINER__;
 
   if (container) {

@@ -1,6 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { API_TAGS } from "@core/constants";
+import { API_TAGS } from "@core/constants/swagger.constant";
 import { HelloWorldService } from "../services/hello-world.service";
 import { GetHelloWorldDocs } from "../decorators/hello-world.admin.docs";
 

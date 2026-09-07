@@ -1,13 +1,14 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
+import { type ConfigType } from "@nestjs/config";
+import { jwtConfig } from "@infrastructure/config/configs/jwt.config";
+import { UserDto } from "@modules/users/dtos/user.dto";
 import { UserService } from "../../users/services/user.service";
 import { PasswordService } from "./password.service";
 import { LoginRequestDto } from "../dtos/login-request.dto";
 import { UnauthorizedUserException } from "../exceptions/unauthorized-user.exception";
 import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { UserStatus } from "../../users/enums/user-status.enum";
-import { UserDto } from "@modules/users/dtos/user.dto";
 import { JwtRefreshPayload } from "../interfaces/jwt-refresh-payload.interface";
 
 @Injectable()
@@ -16,7 +17,8 @@ export class AuthService {
     private readonly userService: UserService,
     private readonly passwordService: PasswordService,
     private readonly jwtService: JwtService,
-    private readonly configService: ConfigService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwt: ConfigType<typeof jwtConfig>,
   ) {}
 
   public async login(dto: LoginRequestDto) {
@@ -48,7 +50,7 @@ export class AuthService {
   public async refreshTokens(refreshToken: string) {
     try {
       const payload = this.jwtService.verify<JwtRefreshPayload>(refreshToken, {
-        secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
+        secret: this.jwt.refreshSecret,
       });
 
       const user = await this.userService.findById(payload.sub);
@@ -70,11 +72,13 @@ export class AuthService {
       role: user.role,
     };
 
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, {
+      expiresIn: this.jwt.accessTokenMaxAge,
+    });
 
     const refreshToken = this.jwtService.sign(payload, {
-      secret: this.configService.getOrThrow<string>("JWT_REFRESH_SECRET"),
-      expiresIn: "7d",
+      secret: this.jwt.refreshSecret,
+      expiresIn: this.jwt.refreshTokenMaxAge,
     });
 
     return { accessToken, refreshToken, user };

@@ -1,9 +1,10 @@
 import { registerAs } from "@nestjs/config";
+import { isProduction } from "../helpers/env.helpers";
 
 export const appConfig = registerAs("app", () => ({
-  host: process.env.HOST || "0.0.0.0",
-  port: Number(process.env.PORT) || 3000,
-  corsOrigins: process.env.CORS_ORIGINS
-    ? process.env.CORS_ORIGINS.split(",")
-    : [],
+  port: Number(process.env.PORT),
+  host: process.env.HOST,
+  corsOrigins: process.env.CORS_ORIGINS?.split(",") ?? [],
+  nodeEnv: process.env.NODE_ENV,
+  isProduction: isProduction(),
 }));
