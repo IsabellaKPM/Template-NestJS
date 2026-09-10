@@ -1910,16 +1910,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/typeorm@npm:^11.0.1":
-  version: 11.0.2
-  resolution: "@nestjs/typeorm@npm:11.0.2"
+"@nestjs/typeorm@npm:^12.0.1":
+  version: 12.0.1
+  resolution: "@nestjs/typeorm@npm:12.0.1"
   peerDependencies:
-    "@nestjs/common": ^10.0.0 || ^11.0.0
-    "@nestjs/core": ^10.0.0 || ^11.0.0
+    "@nestjs/common": ^10.0.0 || ^11.0.0 || ^12.0.0
+    "@nestjs/core": ^10.0.0 || ^11.0.0 || ^12.0.0
     reflect-metadata: ^0.1.13 || ^0.2.0
     rxjs: ^7.2.0
     typeorm: ^0.3.0 || ^1.0.0-dev
-  checksum: 10c0/4c081a0923cc9c68c99820eacc51fc183aa983f765694d7676d73254cc099a9779b693dc52c22d3304419040ddcfdd185490442168891ae5a9033f0d0828c0ec
+  checksum: 10c0/18dfb0847e4fbb9ac6382552ee9e90750c761f325a4fdd8084306865c9b129370a47de93d0f1d40e40ba0feba93987279258683036c8cb385210caad549ff42e
   languageName: node
   linkType: hard
 
@@ -3514,7 +3514,7 @@ __metadata:
     "@nestjs/schematics": "npm:^11.0.0"
     "@nestjs/swagger": "npm:^11.4.6"
     "@nestjs/testing": "npm:^11.0.1"
-    "@nestjs/typeorm": "npm:^11.0.1"
+    "@nestjs/typeorm": "npm:^12.0.1"
     "@testcontainers/postgresql": "npm:^11.14.0"
     "@types/bcrypt": "npm:^6"
     "@types/cookie-parser": "npm:^1.4.10"
