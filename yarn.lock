@@ -530,12 +530,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/cz-commitlint@npm:^21.2.0":
-  version: 21.2.0
-  resolution: "@commitlint/cz-commitlint@npm:21.2.0"
+"@commitlint/cz-commitlint@npm:^21.2.2":
+  version: 21.2.2
+  resolution: "@commitlint/cz-commitlint@npm:21.2.2"
   dependencies:
     "@commitlint/ensure": "npm:^21.2.0"
-    "@commitlint/load": "npm:^21.2.0"
+    "@commitlint/load": "npm:^21.2.2"
     "@commitlint/types": "npm:^21.2.0"
     is-plain-obj: "npm:^4.1.0"
     picocolors: "npm:^1.1.1"
@@ -543,7 +543,7 @@ __metadata:
   peerDependencies:
     commitizen: ^4.0.3
     inquirer: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
-  checksum: 10c0/64d142e1c8668eb13ee44679279afc190ff255ecc3f1e31281175e071370cb8811d0ac57692e9412bf832acf2f7af5d2ef3e6bd03f4e95637818abe61c09596a
+  checksum: 10c0/850e7ea6622b5528690f8b791c83ffc6b402fd3e9a8ba5da2c49e7c3eb6f595aad253fd120ed173fe018d9e9e4f36926c019b3dbc5ea3229e63cc72d19086f8c
   languageName: node
   linkType: hard
 
@@ -596,7 +596,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@commitlint/load@npm:>6.1.1, @commitlint/load@npm:^21.2.0":
+"@commitlint/load@npm:>6.1.1":
   version: 21.2.0
   resolution: "@commitlint/load@npm:21.2.0"
   dependencies:
@@ -3501,7 +3501,7 @@ __metadata:
   dependencies:
     "@commitlint/cli": "npm:^21.2.2"
     "@commitlint/config-conventional": "npm:^21.2.0"
-    "@commitlint/cz-commitlint": "npm:^21.2.0"
+    "@commitlint/cz-commitlint": "npm:^21.2.2"
     "@eslint/eslintrc": "npm:^3.2.0"
     "@eslint/js": "npm:^10.0.1"
     "@nestjs/cli": "npm:^11.0.24"
