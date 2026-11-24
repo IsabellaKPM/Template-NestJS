@@ -20,6 +20,7 @@
       - [Database, ORM \& Validation](#database-orm--validation)
       - [Authentication \& API Documentation](#authentication--api-documentation)
       - [Testing \& Code Quality](#testing--code-quality)
+    - [Authentication \& Users](#authentication--users)
     - [Architecture \& Key Design Decisions](#architecture--key-design-decisions)
       - [Integration Testing with Real Databases (Testcontainers)](#integration-testing-with-real-databases-testcontainers)
       - [Automated Seed \& Migration Pipeline](#automated-seed--migration-pipeline)
@@ -52,7 +53,14 @@ JWT_ACCESS_SECRET=development_access_secret
 JWT_REFRESH_SECRET=development_refresh_secret
 ACCESS_TOKEN_MAX_AGE=3600
 REFRESH_TOKEN_MAX_AGE=86400
+
+ADMIN_NAME=Admin
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=
 ```
+
+`ADMIN_*` are optional and only used by the admin seed (`yarn db:seed:run`), which creates the first Admin user if no user with `ADMIN_EMAIL` exists. Without them the seed is skipped. `ADMIN_PASSWORD` must be at least 8 characters.
 
 ```.env
 NODE_ENV=production
@@ -117,6 +125,25 @@ This template is built using Yarn v4 (Berry) as the package manager and leverage
 - NYC: Code coverage utility used to merge unit and integration test reports.
 
 ---
+
+### Authentication & Users
+
+Auth uses HttpOnly cookies (`access_token`, `refresh_token`). The frontend template talks to these endpoints.
+
+| Endpoint                   | Access        | Description                                                           |
+| -------------------------- | ------------- | --------------------------------------------------------------------- |
+| `POST /api/auth/register`  | Public        | Creates a user (always role `User`) and logs them in                  |
+| `POST /api/auth/login`     | Public        | Login with `email` or `username` plus `password`                      |
+| `POST /api/auth/refresh`   | Refresh cookie | Rotates both tokens                                                   |
+| `POST /api/auth/logout`    | Authenticated | Clears the cookies                                                    |
+| `GET /api/auth/me`         | Authenticated | Current user                                                          |
+| `GET /admin/users`         | Admin only    | List users                                                            |
+| `GET /admin/users/:id`     | Admin only    | Get a user                                                            |
+| `POST /admin/users`        | Admin only    | Create a user choosing role and status                                |
+| `PATCH /admin/users/:id`   | Admin only    | Update a user (sending `password` replaces it)                        |
+| `DELETE /admin/users/:id`  | Admin only    | Delete a user                                                         |
+
+Admins cannot delete themselves or change their own role/status, so the system cannot be left without an admin by accident. The cookies use `SameSite=Strict`, so the API and the frontend must share the same site (for example `app.example.com` and `api.example.com`).
 
 ### Architecture & Key Design Decisions
 
