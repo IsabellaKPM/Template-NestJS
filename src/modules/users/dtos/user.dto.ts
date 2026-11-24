@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { UserRoles } from "../enums/user-roles.enum";
 import { UserStatus } from "../enums/user-status.enum";
+import type { User } from "../entities/user.entity";
 
 export class UserDto {
   @ApiProperty({
@@ -23,4 +24,15 @@ export class UserDto {
 
   @ApiProperty({ required: true, enum: UserStatus })
   status!: UserStatus;
+
+  static fromEntity(user: User): UserDto {
+    return {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+      status: user.status,
+    };
+  }
 }

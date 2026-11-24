@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Transform } from "class-transformer";
 import {
   IsString,
   IsNotEmpty,
@@ -37,6 +38,9 @@ export class CreateUserDto {
     example: "john@example.com",
     description: "Unique email address",
   })
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === "string" ? value.trim().toLowerCase() : value,
+  )
   @IsEmail()
   @IsNotEmpty()
   @MaxLength(255)
