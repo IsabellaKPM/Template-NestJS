@@ -29,6 +29,11 @@ export const envValidationSchema = Joi.object({
   DB_PASSWORD: requiredUnlessProd,
   DB_NAME: requiredUnlessProd,
 
+  ADMIN_NAME: Joi.string().allow("").optional(),
+  ADMIN_USERNAME: Joi.string().allow("").optional(),
+  ADMIN_EMAIL: Joi.string().email().allow("").optional(),
+  ADMIN_PASSWORD: Joi.string().min(8).allow("").optional(),
+
   JWT_ACCESS_SECRET: Joi.string().required(),
   JWT_REFRESH_SECRET: Joi.string().required(),
   ACCESS_TOKEN_MAX_AGE: Joi.number().default(ONE_HOUR_IN_SECONDS),

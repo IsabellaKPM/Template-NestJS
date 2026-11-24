@@ -19,9 +19,9 @@ docker exec -it backend-api yarn db:seed:run
 
 > **IMPORTANT:** The test and development environments run the seeds automatically, there's no need to run them manually.
 
-## Add Seeds
+The template ships with `AdminUserSeed`, which creates the first Admin user from the `ADMIN_NAME`, `ADMIN_USERNAME`, `ADMIN_EMAIL` and `ADMIN_PASSWORD` environment variables. It is idempotent: if a user with `ADMIN_EMAIL` already exists it does nothing, and if the variables are missing it is skipped with a warning. Change the password after the first login in production.
 
-> **IMPORTANT:** To add seeds to the project, you must first uncomment the files under the `src/infrastructure/database/seeds/runners` folder if you haven't already. These files were commented out because when there are no seeds, they throw warnings.
+## Add Seeds
 
 1. Create a file for each table you want to seed under the `src/infrastructure/database/seeds/seeds` folder. For example, for a `Tags` entity with `title` and `category` columns:
 
