@@ -4,6 +4,7 @@ import type { Server } from "http";
 import { Test, TestingModule } from "@nestjs/testing";
 import { INestApplication } from "@nestjs/common";
 import { AppModule } from "@modules/app.module";
+import { configureApp } from "@infrastructure/config/setups/app.setup";
 import { resetDatabase } from "../utils/db-reset.util";
 import { closeApp } from "../utils/close-app.util";
 
@@ -20,6 +21,7 @@ export async function createTestApp(): Promise<TestAppContext> {
   }).compile();
 
   const app = moduleFixture.createNestApplication();
+  configureApp(app);
   await app.init();
 
   const dataSource = app.get(DataSource);
