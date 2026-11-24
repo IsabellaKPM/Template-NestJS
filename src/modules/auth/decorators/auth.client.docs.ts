@@ -4,12 +4,35 @@ import {
   ApiResponse,
   ApiUnauthorizedResponse,
   ApiBadRequestResponse,
+  ApiConflictResponse,
   ApiCookieAuth,
   ApiBody,
 } from "@nestjs/swagger";
 import { LoginRequestDto } from "../dtos/login-request.dto";
+import { RegisterRequestDto } from "../dtos/register-request.dto";
 import { UserDto } from "@modules/users/dtos/user.dto";
 import { MessageResponseDto } from "@core/dtos/message-response.dto";
+
+export function PostRegisterDocs() {
+  return applyDecorators(
+    ApiOperation({
+      summary: "Register a new user and set secure cookies",
+      description: "New users always get the User role.",
+    }),
+    HttpCode(HttpStatus.CREATED),
+    ApiBody({ type: RegisterRequestDto }),
+    ApiResponse({
+      status: HttpStatus.CREATED,
+      description:
+        "Registration successful. Returns user summary and sets HTTP-only cookies.",
+      type: UserDto,
+    }),
+    ApiBadRequestResponse({ description: "Validation failed" }),
+    ApiConflictResponse({
+      description: "Email or username is already in use",
+    }),
+  );
+}
 
 export function PostLoginDocs() {
   return applyDecorators(

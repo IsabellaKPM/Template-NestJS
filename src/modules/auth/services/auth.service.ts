@@ -6,6 +6,8 @@ import { UserDto } from "@modules/users/dtos/user.dto";
 import { UserService } from "../../users/services/user.service";
 import { PasswordService } from "./password.service";
 import { LoginRequestDto } from "../dtos/login-request.dto";
+import { RegisterRequestDto } from "../dtos/register-request.dto";
+import { UserRoles } from "../../users/enums/user-roles.enum";
 import { UnauthorizedUserException } from "../exceptions/unauthorized-user.exception";
 import { JwtPayload } from "../interfaces/jwt-payload.interface";
 import { UserStatus } from "../../users/enums/user-status.enum";
@@ -21,11 +23,17 @@ export class AuthService {
     private readonly jwt: ConfigType<typeof jwtConfig>,
   ) {}
 
-  public async login(dto: LoginRequestDto) {
-    if (!dto.email && !dto.username) {
-      throw new UnauthorizedUserException();
-    }
+  public async register(dto: RegisterRequestDto) {
+    const user = await this.userService.create({
+      ...dto,
+      role: UserRoles.USER,
+      status: UserStatus.ACTIVE,
+    });
 
+    return this.generateTokens(user);
+  }
+
+  public async login(dto: LoginRequestDto) {
     const user = dto.email
       ? await this.userService.findByEmailWithPassword(dto.email)
       : dto.username
@@ -44,7 +52,9 @@ export class AuthService {
       throw new UnauthorizedUserException();
     }
 
-    return this.generateTokens(user);
+    const { encryptedPassword: _encryptedPassword, ...safeUser } = user;
+
+    return this.generateTokens(safeUser);
   }
 
   public async refreshTokens(refreshToken: string) {
@@ -53,7 +63,7 @@ export class AuthService {
         secret: this.jwt.refreshSecret,
       });
 
-      const user = await this.userService.findById(payload.sub);
+      const user = await this.userService.findByIdOrNull(payload.sub);
 
       if (!user || user.status !== UserStatus.ACTIVE) {
         throw new UnauthorizedUserException();

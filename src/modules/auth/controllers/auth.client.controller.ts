@@ -5,12 +5,14 @@ import { API_TAGS } from "@core/constants/swagger.constant";
 import { AuthService } from "../services/auth.service";
 import { CookieService } from "../services/cookie.service";
 import { LoginRequestDto } from "../dtos/login-request.dto";
+import { RegisterRequestDto } from "../dtos/register-request.dto";
 import { JwtAuthGuard } from "../guards/jwt-auth.guard";
 import { CurrentUser } from "../decorators/current-user.decorator";
 import { Cookies } from "../decorators/cookies.decorator";
 import { UserDto } from "../../users/dtos/user.dto";
 import { UnauthorizedUserException } from "../exceptions/unauthorized-user.exception";
 import {
+  PostRegisterDocs,
   PostLoginDocs,
   PostRefreshDocs,
   PostLogoutDocs,
@@ -25,6 +27,19 @@ export class AuthClientController {
     private readonly authService: AuthService,
     private readonly cookieService: CookieService,
   ) {}
+
+  @Post("register")
+  @PostRegisterDocs()
+  public async register(
+    @Body() dto: RegisterRequestDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<UserDto> {
+    const { accessToken, refreshToken, user } =
+      await this.authService.register(dto);
+    this.cookieService.setAuthCookies(res, accessToken, refreshToken);
+
+    return user;
+  }
 
   @Post("login")
   @PostLoginDocs()
