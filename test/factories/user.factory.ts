@@ -4,6 +4,8 @@ import { User } from "@modules/users/entities/user.entity";
 import { UserStatus } from "@modules/users/enums/user-status.enum";
 import { UserRoles } from "@modules/users/enums/user-roles.enum";
 
+export const MOCK_USER_PASSWORD = "Password123!";
+
 type CreateMockUserParams = Partial<User>;
 
 export async function createMockUser(
@@ -14,8 +16,9 @@ export async function createMockUser(
 
   const user = userRepo.create({
     email: `user-${uniqueSuffix}@example.com`,
+    username: `user_${uniqueSuffix}`,
     name: `User ${uniqueSuffix}`,
-    encryptedPassword: `password-${uniqueSuffix}`,
+    encryptedPassword: MOCK_USER_PASSWORD,
     status: UserStatus.ACTIVE,
     role: UserRoles.USER,
     ...overrides,
